@@ -1,21 +1,26 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import TodoList from '../todo-list/todo-list';
+import TodoList from '../todo-list/';
 
 import './todo-app.css'
 
 export default class TodoApp extends Component {
-
-    //  TODO: should use state for current input txt and an array for todos
+    state = {
+        items: [], //         // {text: 'hello world', id: 12312123123123}
+        text: '',
+    }
 
     handleChange = (e) => {
-        // TODO: save data
+        this.setState({ text: e.target.value })
+        // console.log(e)
     };
 
     handleSubmit = (e) => {
 
-        // TODO: prevent default behaviour
-
+        e.preventDefault()
+        if (this.state.text.length === 0) {
+            return
+        }
         // TODO: need to check that txt for new entry is not empty
 
         // TODO: need to create a new object entry
@@ -24,7 +29,14 @@ export default class TodoApp extends Component {
             id: Date.now()
         };
 
-        // TODO: need to update data and reset txt value
+
+
+        this.setState(state => ({
+            // items: state.items.concat(newItem)
+            items: [...state.items, newItem],
+            text: ''
+
+        }))
     }
 
     render() {
@@ -32,12 +44,13 @@ export default class TodoApp extends Component {
             <div className={'todo-app'}>
                 <h1 className={'h3 mb-3 fw-normal'}>TODO</h1>
 
-                {/* should render list */}
+                <TodoList items={this.state.items} />
 
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-floating">
 
-                        <input
+                        <input onChange={this.handleChange}
+                            value={this.state.text}
                             type="text"
                             className="form-control todo-list__input"
                             placeholder=" What needs to be done?"
@@ -48,7 +61,7 @@ export default class TodoApp extends Component {
 
 
                     <button className={'w-100 btn btn-lg btn-primary'}>
-                        Add # 123
+                        Add # {this.state.items.length + 1}
                     </button>
                 </form>
             </div>

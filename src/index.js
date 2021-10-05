@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/app'
 
 import './index.css';
 
-// TODO: should render app
+ReactDOM.render(< App />, document.querySelector('#root'))
 
 
